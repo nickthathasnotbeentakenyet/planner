@@ -717,8 +717,8 @@ textarea {
   }
 
   .task-text {
-    flex: 1 1 75px;
-    min-width: 0;
+    flex: 1 1 auto;
+    min-width: 60px;
   }
 
   .task-card select {
