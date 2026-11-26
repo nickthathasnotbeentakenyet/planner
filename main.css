@@ -551,9 +551,23 @@ textarea {
     gap: 8px;
   }
 
+  /* 1. Кнопки даты в один ровный ряд без переноса */
   .date-controls {
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 4px;
   }
+
+  .date-controls input[type="date"] {
+    padding: 4px 5px;
+    font-size: 13px;
+    max-width: 132px;
+  }
+
+  .date-controls button {
+    padding: 5px 8px;
+    font-size: 13px;
+  }
+
 
   .date-title {
     width: 100%;
@@ -570,13 +584,54 @@ textarea {
     right: auto;
   }
 
+  /* 2. Компактная статистика (масштаб ~0.8) */
   .chart-box {
     min-width: 100%;
+    padding: 8px 10px;
+  }
+
+  .chart-box h3 {
+    font-size: 11px;
+    margin-bottom: 4px;
   }
 
   .chart-body {
-    justify-content: space-between;
-    gap: 10px;
+    min-height: 76px;
+    gap: 8px;
+  }
+
+  .donut-chart {
+    width: 74px;
+    height: 74px;
+  }
+
+  .donut-hole {
+    inset: 16px;
+    font-size: 9px;
+  }
+
+  .donut-hole strong {
+    font-size: 11px;
+  }
+
+  .columns-chart {
+    height: 74px;
+    padding: 12px 4px 2px;
+    gap: 6px;
+  }
+
+  .col-val {
+    font-size: 9px;
+  }
+
+  .legend-list {
+    font-size: 10px;
+    gap: 1px;
+  }
+
+  .legend-dot {
+    width: 8px;
+    height: 8px;
   }
 
   /* В таймслотах на телефоне ставим Основной и Бэкап-план друг под другом */

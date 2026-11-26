@@ -813,6 +813,47 @@ document.getElementById('editCloudBtn').onclick = (e) => {
   updateCloudFormUI(true);
 };
 
+// === АВТОСКРОЛЛ ПРИ ПЕРЕТАСКИВАНИИ НА СЕНСОРНОМ ЭКРАНЕ ===
+let autoScrollSpeed = 0;
+let autoScrollFrame = null;
+
+function runAutoScroll() {
+  if (autoScrollSpeed !== 0) {
+    window.scrollBy(0, autoScrollSpeed);
+    autoScrollFrame = requestAnimationFrame(runAutoScroll);
+  } else {
+    autoScrollFrame = null;
+  }
+}
+
+document.addEventListener('touchmove', (e) => {
+  if (!dragPayload || !e.touches || !e.touches.length) {
+    autoScrollSpeed = 0;
+    return;
+  }
+  const y = e.touches.item(0).clientY;
+  const edgeZone = 75; // зона у края экрана в пикселях
+  const maxSpeed = 12;
+
+  if (y < edgeZone) {
+    autoScrollSpeed = -Math.ceil(((edgeZone - y) / edgeZone) * maxSpeed);
+  } else if (y > window.innerHeight - edgeZone) {
+    autoScrollSpeed = Math.ceil(((y - (window.innerHeight - edgeZone)) / edgeZone) * maxSpeed);
+  } else {
+    autoScrollSpeed = 0;
+  }
+
+  if (autoScrollSpeed !== 0 && !autoScrollFrame) {
+    autoScrollFrame = requestAnimationFrame(runAutoScroll);
+  }
+}, { passive: true });
+
+document.addEventListener('touchend', () => {
+  autoScrollSpeed = 0;
+  dragPayload = null;
+});
+
+
 
 populateTagSelects();
 renderAll();
