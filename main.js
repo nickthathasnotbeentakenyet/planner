@@ -679,7 +679,8 @@ async function pushToCloud() {
     const res = await fetch('https://github.com' + cloudConfig.gistId, {
       method: 'PATCH',
       headers: {
-        'Authorization': 'token ' + cloudConfig.token,
+        'Authorization': 'Bearer ' + cloudConfig.token,
+        'Accept': 'application/vnd.github+json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -690,8 +691,14 @@ async function pushToCloud() {
         }
       })
     });
-    setSyncStatus(res.ok ? 'ok' : 'err');
+    if (!res.ok) {
+      console.error('GitHub PATCH error:', res.status, await res.text());
+      setSyncStatus('err');
+      return;
+    }
+    setSyncStatus('ok');
   } catch (e) {
+    console.error('Cloud push catch:', e);
     setSyncStatus('err');
   }
 }
@@ -702,16 +709,25 @@ async function pullFromCloud(silent) {
   try {
     const res = await fetch('https://github.com' + cloudConfig.gistId + '?t=' + Date.now(), {
       headers: {
-        'Authorization': 'token ' + cloudConfig.token
+        'Authorization': 'Bearer ' + cloudConfig.token,
+        'Accept': 'application/vnd.github+json'
       }
     });
     if (!res.ok) {
+      const errText = await res.text();
+      console.error('GitHub GET error:', res.status, errText);
       setSyncStatus('err');
+      if (!silent) alert('Ошибка GitHub (' + res.status + '): проверь Token и Gist ID.');
       return;
     }
     const data = await res.json();
     const file = data.files && data.files['planner_db.json'];
-    if (file && file.content) {
+    if (!file) {
+      setSyncStatus('err');
+      if (!silent) alert('В этом Gist не найден файл planner_db.json! Проверь имя файла в Gist.');
+      return;
+    }
+    if (file.content) {
       const remoteDb = JSON.parse(file.content);
       if (remoteDb && remoteDb.days) {
         db = remoteDb;
@@ -719,13 +735,19 @@ async function pullFromCloud(silent) {
         renderAll();
         setSyncStatus('ok');
         if (!silent) alert('Данные успешно загружены из облака!');
+      } else {
+        // Если в Gist пока пустой объект {} — отправляем туда текущую локальную базу
+        await pushToCloud();
+        if (!silent) alert('Облако подключено, текущая база отправлена в Gist!');
       }
     }
   } catch (e) {
+    console.error('Cloud pull catch:', e);
     setSyncStatus('err');
-    if (!silent) alert('Ошибка подключения к облаку.');
+    if (!silent) alert('Ошибка подключения: ' + e.message);
   }
 }
+
 
 const tokenInputEl = document.getElementById('cloudTokenInput');
 const gistInputEl = document.getElementById('cloudGistInput');

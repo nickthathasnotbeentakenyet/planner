@@ -1,4 +1,4 @@
-const CACHE_NAME = 'planner-cache-v2';
+const CACHE_NAME = 'planner-cache-v3';
 const ASSETS = [
   './',
   './index.html',
@@ -25,6 +25,7 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  if (event.request.url.includes('://github.com')) return;
   event.respondWith(
     caches.match(event.request).then((cached) => {
       return cached || fetch(event.request).catch(() => caches.match('./index.html'));
