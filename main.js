@@ -762,6 +762,7 @@ document.getElementById('saveCloudBtn').onclick = () => {
   const gistId = gistInputEl.value.trim();
 
   cloudConfig = { token: token, gistId: gistId };
+  updateCloudFormUI(false);
   localStorage.setItem('planner_cloud', JSON.stringify(cloudConfig));
 
   if (!token || !gistId) {
@@ -792,8 +793,30 @@ document.addEventListener('visibilitychange', () => {
   }
 });
 
+function updateCloudFormUI(forceEdit) {
+  const formEl = document.getElementById('cloudFormFields');
+  const barEl = document.getElementById('cloudConnectedBar');
+  if (!formEl || !barEl) return;
+
+  const isConfigured = Boolean(cloudConfig.token && cloudConfig.gistId);
+  if (isConfigured && !forceEdit) {
+    formEl.style.display = 'none';
+    barEl.style.display = 'flex';
+  } else {
+    formEl.style.display = 'flex';
+    barEl.style.display = 'none';
+  }
+}
+
+document.getElementById('editCloudBtn').onclick = (e) => {
+  e.stopPropagation();
+  updateCloudFormUI(true);
+};
+
+
 populateTagSelects();
 renderAll();
 setSyncStatus('syncing');
+updateCloudFormUI(false);
 pullFromCloud(true);
 setInterval(renderSlots, 60000);

@@ -36,11 +36,15 @@
       <details class="backup-menu" id="backupMenu">
         <summary>Данные <span id="syncStatusDot">▾</span></summary>
         <div class="backup-dropdown">
-          <div class="cloud-form">
+          <div class="cloud-form" id="cloudFormFields">
             <div class="cloud-form-title">Синхронизация (GitHub Gist)</div>
             <input type="password" id="cloudTokenInput" placeholder="GitHub Token (ghp_...)">
             <input type="text" id="cloudGistInput" placeholder="Gist ID">
             <button type="button" id="saveCloudBtn" class="primary-small-btn">Сохранить и подключить</button>
+          </div>
+          <div class="cloud-connected-bar" id="cloudConnectedBar" style="display: none;">
+            <span>Облако подключено</span>
+            <button type="button" id="editCloudBtn" class="link-small-btn">Изменить</button>
           </div>
           <button type="button" id="syncNowBtn">Синхронизировать сейчас</button>
           <hr style="border:none; border-top:1px solid #EFECE6; margin:2px 0;">

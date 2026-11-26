@@ -1,4 +1,4 @@
-const CACHE_NAME = 'planner-cache-v5';
+const CACHE_NAME = 'planner-cache-v6';
 const ASSETS = [
   './',
   './index.html',
