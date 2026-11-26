@@ -676,7 +676,7 @@ async function pushToCloud() {
   if (!cloudConfig.token || !cloudConfig.gistId) return;
   setSyncStatus('syncing');
   try {
-    const res = await fetch('https://github.com/' + cloudConfig.gistId, {
+    const res = await fetch('https://api.github.com/gists/' + cloudConfig.gistId, {
       method: 'PATCH',
       headers: {
         'Authorization': 'Bearer ' + cloudConfig.token,
@@ -707,7 +707,7 @@ async function pullFromCloud(silent) {
   if (!cloudConfig.token || !cloudConfig.gistId) return;
   setSyncStatus('syncing');
   try {
-    const res = await fetch('https://github.com/' + cloudConfig.gistId + '?t=' + Date.now(), {
+    const res = await fetch('https://api.github.com/gists/' + cloudConfig.gistId + '?t=' + Date.now(), {
       headers: {
         'Authorization': 'Bearer ' + cloudConfig.token,
         'Accept': 'application/vnd.github+json'

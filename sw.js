@@ -1,11 +1,11 @@
-const CACHE_NAME = 'planner-cache-v4';
+const CACHE_NAME = 'planner-cache-v5';
 const ASSETS = [
   './',
   './index.html',
   './main.css',
   './main.js',
   './manifest.json',
-  './icon.svg'
+  './icon.png'
 ];
 
 self.addEventListener('install', (event) => {
