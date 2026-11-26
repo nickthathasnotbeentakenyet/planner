@@ -625,3 +625,40 @@ textarea {
   }
 }
 
+/* ФОРМА НАСТРОЙКИ ОБЛАКА В МЕНЮ */
+.cloud-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 6px 8px 8px;
+  background: var(--bg-page);
+  border-radius: 6px;
+  margin-bottom: 2px;
+}
+
+.cloud-form-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.cloud-form input {
+  width: 100%;
+  font-size: 12px;
+  padding: 5px 7px;
+  background: #FFFFFF;
+}
+
+.backup-dropdown .primary-small-btn {
+  background: var(--accent-btn);
+  border: 1px solid #C4D0E6;
+  text-align: center;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.backup-dropdown .primary-small-btn:hover {
+  background: var(--accent-btn-hover);
+}
+

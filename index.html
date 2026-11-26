@@ -36,7 +36,12 @@
       <details class="backup-menu" id="backupMenu">
         <summary>Данные <span id="syncStatusDot">▾</span></summary>
         <div class="backup-dropdown">
-          <button type="button" id="cloudSetupBtn">Облако (GitHub Gist)</button>
+          <div class="cloud-form">
+            <div class="cloud-form-title">Синхронизация (GitHub Gist)</div>
+            <input type="password" id="cloudTokenInput" placeholder="GitHub Token (ghp_...)">
+            <input type="text" id="cloudGistInput" placeholder="Gist ID">
+            <button type="button" id="saveCloudBtn" class="primary-small-btn">Сохранить и подключить</button>
+          </div>
           <button type="button" id="syncNowBtn">Синхронизировать сейчас</button>
           <hr style="border:none; border-top:1px solid #EFECE6; margin:2px 0;">
           <button type="button" id="exportBtn">Скачать бэкап (.json)</button>
@@ -44,6 +49,7 @@
           <input type="file" id="importFileInput" accept=".json" hidden>
         </div>
       </details>
+
 
       <div class="progress-badge">
         Прогресс дня: <strong id="dayProgressText">0% (0/0 слотов)</strong>

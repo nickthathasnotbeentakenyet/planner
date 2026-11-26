@@ -727,18 +727,32 @@ async function pullFromCloud(silent) {
   }
 }
 
-document.getElementById('cloudSetupBtn').onclick = () => {
-  document.getElementById('backupMenu').removeAttribute('open');
-  const token = prompt('Вставь GitHub Personal Access Token (с правом gist):', cloudConfig.token);
-  if (token === null) return;
-  const gistId = prompt('Вставь ID твоего Gist:', cloudConfig.gistId);
-  if (gistId === null) return;
+const tokenInputEl = document.getElementById('cloudTokenInput');
+const gistInputEl = document.getElementById('cloudGistInput');
 
-  cloudConfig = { token: token.trim(), gistId: gistId.trim() };
+if (tokenInputEl && gistInputEl) {
+  tokenInputEl.value = cloudConfig.token || '';
+  gistInputEl.value = cloudConfig.gistId || '';
+}
+
+document.getElementById('saveCloudBtn').onclick = () => {
+  const token = tokenInputEl.value.trim();
+  const gistId = gistInputEl.value.trim();
+
+  cloudConfig = { token: token, gistId: gistId };
   localStorage.setItem('planner_cloud', JSON.stringify(cloudConfig));
+
+  if (!token || !gistId) {
+    setSyncStatus('');
+    alert('Настройки облака очищены.');
+    return;
+  }
+
   setSyncStatus('syncing');
   pullFromCloud(false);
+  document.getElementById('backupMenu').removeAttribute('open');
 };
+
 
 document.getElementById('syncNowBtn').onclick = () => {
   document.getElementById('backupMenu').removeAttribute('open');
