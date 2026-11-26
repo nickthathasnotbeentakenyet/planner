@@ -682,3 +682,26 @@ textarea {
   text-decoration: underline;
 }
 
+
+  /* На мобильном переносим селект тега и крестик на вторую строку внутри карточки */
+  .task-card {
+    flex-wrap: wrap;
+    padding: 5px 8px;
+    row-gap: 4px;
+  }
+
+  .task-text {
+    flex: 1 1 calc(100% - 26px);
+  }
+
+  .task-card select {
+    margin-left: 23px;
+    font-size: 11px;
+    padding: 2px 6px;
+  }
+
+  .task-card .del-btn {
+    margin-left: auto;
+    padding: 0 6px;
+  }
+
