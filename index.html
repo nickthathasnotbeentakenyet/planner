@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Ежедневник</title>
+  <link rel="preconnect" href="https://googleapis.com">
+  <link rel="preconnect" href="https://gstatic.com" crossorigin>
+  <link href="https://googleapis.com/css2?family=Orbitron:wght@600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./main.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#F6F5F0">
+  <link rel="shortcut icon" href="./icon.png" type="image/png" />
+  <script src="https://github.io"></script>
+</head>
+<body>
+
+  <!-- ПОЛОСА ПРОГРЕССА В САМОМ ВЕРХУ СТРАНИЦЫ -->
+  <div class="top-progress-wrapper">
+    <div class="top-progress-track">
+      <div id="topProgressFill" class="top-progress-fill"></div>
+    </div>
+  </div>
+
+  <!-- ПАНЕЛЬ УПРАВЛЕНИЯ ДАТОЙ -->
+  <div class="header-bar box">
+    <div class="date-controls">
+      <input type="date" id="datePicker">
+      <button id="prevDayBtn" title="Предыдущий день">&lt;</button>
+      <button id="todayBtn">Сегодня</button>
+      <button id="nextDayBtn" title="Следующий день">&gt;</button>
+      <span class="date-title" id="displayDate"></span>
+    </div>
+
+    <div class="header-right">
+      <details class="backup-menu" id="backupMenu">
+        <summary>Данные <span id="syncStatusDot">▾</span></summary>
+        <div class="backup-dropdown">
+          <button type="button" id="cloudSetupBtn">Облако (GitHub Gist)</button>
+          <button type="button" id="syncNowBtn">Синхронизировать сейчас</button>
+          <hr style="border:none; border-top:1px solid #EFECE6; margin:2px 0;">
+          <button type="button" id="exportBtn">Скачать бэкап (.json)</button>
+          <button type="button" id="importBtn">Загрузить из файла</button>
+          <input type="file" id="importFileInput" accept=".json" hidden>
+        </div>
+      </details>
+
+      <div class="progress-badge">
+        Прогресс дня: <strong id="dayProgressText">0% (0/0 слотов)</strong>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- МЕСЯЧНАЯ СТАТИСТИКА -->
+  <div class="stats-row">
+    <div class="chart-box box">
+      <h3>Доля тегов за месяц (<span id="statsMonthLabel"></span>)</h3>
+      <div class="chart-body" id="chartDistribution"></div>
+    </div>
+    <div class="chart-box box">
+      <h3>Выполнение по тегам (<span id="statsMonthLabel2"></span>)</h3>
+      <div class="chart-body" id="chartCompletion"></div>
+    </div>
+  </div>
+
+  <!-- ОСНОВНАЯ РАБОЧАЯ ОБЛАСТЬ -->
+  <div class="row">
+    
+    <!-- ЛЕВАЯ КОЛОНКА: ТАЙМСЛОТЫ -->
+    <div class="col-main box">
+      <h3>Расписание дня</h3>
+      <div class="slots-header">
+        <div class="slots-header-time">Время</div>
+        <div class="slots-header-col">Основной план</div>
+        <div class="slots-header-col">Бэкап-план</div>
+      </div>
+      <div id="slotsContainer"></div>
+    </div>
+
+    <!-- ПРАВАЯ КОЛОНКА: ЗАМЕТКИ, ШАБЛОНЫ, БЭКЛОГ -->
+    <div class="col-side">
+      <div class="box">
+        <h3>Заметки дня</h3>
+        <textarea id="dayNotes" placeholder="Заметки на выбранный день..."></textarea>
+      </div>
+
+      <div class="box">
+        <h3>Ежедневные шаблоны</h3>
+        <div class="add-form">
+          <input type="text" id="tplInput" placeholder="Новая задача...">
+          <select id="tplTag"></select>
+          <button id="addTplBtn">+</button>
+        </div>
+        <div id="templatesList"></div>
+      </div>
+
+      <div class="box" id="backlogDropZone">
+        <h3>Бэклог</h3>
+        <div class="add-form">
+          <input type="text" id="backlogInput" placeholder="В бэклог...">
+          <select id="backlogTag"></select>
+          <button id="addBacklogBtn">+</button>
+        </div>
+        <div id="backlogList"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="./main.js"></script>
+  <script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js');
+    });
+  }
+</script>
+</body>
+</html>
