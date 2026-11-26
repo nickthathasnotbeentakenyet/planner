@@ -718,15 +718,21 @@ textarea {
 
   .task-text {
     flex: 1 1 auto;
-    min-width: 45px;
+    min-width: 55px;
+  }
+
+  .task-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+    flex-shrink: 0;
   }
 
   .task-card select {
-    margin-left: auto;
     font-size: 11px;
     padding: 2px 4px;
     width: 82px;
-    flex-shrink: 0;
   }
 
   .task-card .del-btn {

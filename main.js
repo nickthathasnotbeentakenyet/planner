@@ -344,7 +344,11 @@ function renderSlots() {
           renderAll();
         };
 
-        card.append(cb, span, tagSel, delBtn);
+        const actions = document.createElement('div');
+        actions.className = 'task-actions';
+        actions.append(tagSel, delBtn);
+        card.append(cb, span, actions);
+
 
         card.ondragstart = (e) => {
           dragPayload = { source: 'slot', time: time, type: type, task: task };
