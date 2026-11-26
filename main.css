@@ -551,21 +551,24 @@ textarea {
     gap: 8px;
   }
 
-  /* 1. Кнопки даты в один ровный ряд без переноса */
+  /* 1. Кнопки даты равномерно на всю ширину без переноса */
   .date-controls {
-    justify-content: flex-start;
-    gap: 4px;
+    justify-content: space-between;
+    gap: 6px;
   }
 
   .date-controls input[type="date"] {
-    padding: 4px 5px;
+    flex: 1.4;
+    padding: 5px 6px;
     font-size: 13px;
-    max-width: 132px;
+    min-width: 0;
   }
 
   .date-controls button {
-    padding: 5px 8px;
+    flex: 1;
+    padding: 6px 8px;
     font-size: 13px;
+    text-align: center;
   }
 
 

@@ -813,7 +813,14 @@ document.getElementById('editCloudBtn').onclick = (e) => {
   updateCloudFormUI(true);
 };
 
-// === АВТОСКРОЛЛ ПРИ ПЕРЕТАСКИВАНИИ НА СЕНСОРНОМ ЭКРАНЕ ===
+populateTagSelects();
+renderAll();
+setSyncStatus('syncing');
+updateCloudFormUI(false);
+pullFromCloud(true);
+setInterval(renderSlots, 60000);
+
+// === АВТОСКРОЛЛ ПРИ ПЕРЕТАСКИВАНИИ (ПК И ANDROID) ===
 let autoScrollSpeed = 0;
 let autoScrollFrame = null;
 
@@ -826,14 +833,11 @@ function runAutoScroll() {
   }
 }
 
-document.addEventListener('touchmove', (e) => {
-  if (!dragPayload || !e.touches || !e.touches.length) {
-    autoScrollSpeed = 0;
-    return;
-  }
-  const y = e.touches.item(0).clientY;
-  const edgeZone = 75; // зона у края экрана в пикселях
-  const maxSpeed = 12;
+document.addEventListener('dragover', (e) => {
+  e.preventDefault(); // разрешаем dragover по всей странице для получения координат Y
+  const y = e.clientY;
+  const edgeZone = 90; // зона у верхнего и нижнего края экрана (90px)
+  const maxSpeed = 14;
 
   if (y < edgeZone) {
     autoScrollSpeed = -Math.ceil(((edgeZone - y) / edgeZone) * maxSpeed);
@@ -846,18 +850,13 @@ document.addEventListener('touchmove', (e) => {
   if (autoScrollSpeed !== 0 && !autoScrollFrame) {
     autoScrollFrame = requestAnimationFrame(runAutoScroll);
   }
-}, { passive: true });
+});
 
-document.addEventListener('touchend', () => {
+document.addEventListener('dragend', () => {
   autoScrollSpeed = 0;
   dragPayload = null;
 });
 
-
-
-populateTagSelects();
-renderAll();
-setSyncStatus('syncing');
-updateCloudFormUI(false);
-pullFromCloud(true);
-setInterval(renderSlots, 60000);
+document.addEventListener('drop', () => {
+  autoScrollSpeed = 0;
+});
