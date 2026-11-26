@@ -551,25 +551,56 @@ textarea {
     gap: 8px;
   }
 
-  /* 1. Кнопки даты равномерно на всю ширину без переноса */
+   /* 1. Аккуратная панель дат: календарь целиком + сгруппированные кнопки навигации */
   .date-controls {
-    justify-content: space-between;
-    gap: 6px;
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
   }
 
   .date-controls input[type="date"] {
-    flex: 1.4;
-    padding: 5px 6px;
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 138px;
+    padding: 5px 8px;
     font-size: 13px;
-    min-width: 0;
   }
 
   .date-controls button {
-    flex: 1;
-    padding: 6px 8px;
+    padding: 6px 0;
     font-size: 13px;
     text-align: center;
   }
+
+  #prevDayBtn,
+  #nextDayBtn {
+    flex: 0 0 36px;
+    font-weight: 700;
+  }
+
+  #todayBtn {
+    flex: 1;
+  }
+
+  /* Визуально склеиваем < | Сегодня | > в единый аккуратный контрол */
+  #prevDayBtn {
+    margin-right: -8px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  #todayBtn {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+
+  #nextDayBtn {
+    margin-left: -8px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
 
 
   .date-title {
