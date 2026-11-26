@@ -708,32 +708,30 @@ textarea {
     font-size: 16px;
   }
 
-  .task-card select {
-    font-size: 12px;
-    padding: 3px 4px;
-  }
-
-    /* На мобильном переносим селект тега и крестик на вторую строку внутри карточки */
+  /* Умный перенос: короткие задачи в 1 строку, длинные переносят тег на 2-ю */
   .task-card {
     flex-wrap: wrap;
     padding: 5px 8px;
     row-gap: 4px;
+    column-gap: 6px;
   }
 
   .task-text {
-    flex: 1 1 calc(100% - 26px);
+    flex: 1 1 120px;
+    min-width: 0;
   }
 
   .task-card select {
-    margin-left: 23px;
+    margin-left: auto;
     font-size: 11px;
-    padding: 2px 6px;
+    padding: 2px 5px;
+    max-width: 105px;
   }
 
   .task-card .del-btn {
-    margin-left: auto;
-    padding: 0 6px;
+    padding: 0 5px;
   }
+
 
 }
 
